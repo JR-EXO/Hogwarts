@@ -2,7 +2,7 @@ import json
 from typing import List, Any, Union, Optional
 
 
-def ask_text(message: str) -> str:
+def ask_text(message: str) :
     while True:
         user_input = input(message).strip()
         if user_input:
@@ -10,7 +10,7 @@ def ask_text(message: str) -> str:
         print("Error: Input cannot be empty. Please try again.")
 
 
-def is_valid_number(s: str) -> bool:
+def is_valid_number(s: str) :
     if not s:
         return False
 
@@ -22,27 +22,23 @@ def is_valid_number(s: str) -> bool:
     return all(c.isdigit() for c in s)
 
 
-def ask_number(message: str, min_val: Optional[int] = None, max_val: Optional[int] = None) -> int:
+def ask_number(message: str, min_val: Optional[int] = None, max_val: Optional[int] = None) :
     """
     Prompt the user to enter an integer within optional bounds.
-    
-    Args:
-        message (str): The prompt message to display
-        min_val (int, optional): Minimum allowed value (inclusive)
-        max_val (int, optional): Maximum allowed value (inclusive)
-        
-    Returns:
-        int: The validated number entered by the user
+    Arg:
+        message (str): the prompt message to display
+        min_val (int, optional): minimum allowed value
+        max_val (int, optional): maximum allowed value
+    Return:
+        int: the validated number entered by the user
     """
 
     while True:
         user_input = input(message).strip()
-        
-        # Check if input is a valid number
+
         if not is_valid_number(user_input):
             print("Error: Please enter a valid integer.")
-            continue
-            
+
         num = int(user_input)
 
         if min_val is not None and num < min_val:
@@ -50,29 +46,22 @@ def ask_number(message: str, min_val: Optional[int] = None, max_val: Optional[in
                 print(f"Error: Please enter a number between {min_val} and {max_val}.")
             else:
                 print(f"Error: Number must be at least {min_val}.")
-            continue
-            
-        # Validate against max_val if provided
         if max_val is not None and num > max_val:
             if min_val is not None:
                 print(f"Error: Please enter a number between {min_val} and {max_val}.")
             else:
                 print(f"Error: Number must be at most {max_val}.")
-            continue
-            
         return num
 
 
-def ask_choice(message: str, options: List[Any]) -> Any:
+def ask_choice(message: str, options: List[Any]) :
     """
-    Display a numbered menu of options and get a valid choice from the user.
-    
-    Args:
-        message (str): The prompt message to display
-        options (List[Any]): List of options to choose from
-        
-    Returns:
-        Any: The selected option from the list
+    Display a numbered menu of options and get a valid choice.
+    Arg:
+        message (str): the prompt message to display
+        options (List): list of options to choose from
+    Return:
+        the selected option from the list
     """
     if not options:
         raise ValueError("No options provided")
