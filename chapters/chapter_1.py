@@ -236,7 +236,7 @@ def buy_supplies(character: Dict) -> None:
             print(f"\nYou have {character['Money']} Galleons left.")
             choice = ask_number("Which pet do you want? (enter number): ", 1, len(pets))
             selected_pet = pets[choice - 1]
-
+#a
             if selected_pet["price"] > character["Money"]:
                 print("You don't have enough Galleons for that pet!")
                 continue
