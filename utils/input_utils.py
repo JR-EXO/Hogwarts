@@ -22,27 +22,40 @@ def is_valid_number(s: str) :
     return all(c.isdigit() for c in s)
 
 
-def ask_number(message: str, min_val: Optional[int] = None, max_val: Optional[int] = None) :
+def ask_number(message, min_val=None, max_val=None):
+    user_input = input(message)
+    valid_digits = "0123456789"
+    is_valid = True
 
-    while True:
-        user_input = input(message).strip()
+    if len(user_input) == 0 :
+        is_valid = False
 
-        if not is_valid_number(user_input):
-            print("Error: Please enter a valid integer.")
+    is_negative = False
+    if user_input[0] == '-':
+        is_negative = True
+        user_input = user_input[1:]
 
-        num = int(user_input)
+    for v in user_input:
+        if v not in valid_digits:
+            is_valid = False
 
-        if min_val is not None and num < min_val:
-            if max_val is not None:
-                print(f"Error: Please enter a number between {min_val} and {max_val}.")
-            else:
-                print(f"Error: Number must be at least {min_val}.")
-        if max_val is not None and num > max_val:
-            if min_val is not None:
-                print(f"Error: Please enter a number between {min_val} and {max_val}.")
-            else:
-                print(f"Error: Number must be at most {max_val}.")
-        return num
+    if not is_valid:
+        print("Not valid. Please enter a valid integer.")
+        return ask_number(message, min_val, max_val)
+
+    number = 0
+
+    for i in user_input:
+        unit = ord(i) - ord('0')
+        number = number * 10 + unit
+
+    if is_negative:
+        number = -number
+    if min_val is not None and number < min_val or max_val is not None and number > max_val:
+        print(f"Please enter a number between {min_val} and {max_val}.")
+        return ask_number(message, min_val, max_val)
+
+    return number
 
 
 def ask_choice(message: str, options: List[Any]) :
@@ -63,14 +76,6 @@ def ask_choice(message: str, options: List[Any]) :
 
 def load_file(file_path: str):
 
-    Load and parse a JSON file:
-    Arg:
-        file_path (str): path to the JSON file
-    Returns:
-        Union[dict, list]: the parsed JSON data
-    Raises(error):
-        FileNotFoundError: If the file doesn't exist
-        json.JSONDecodeError: If the file contains invalid JSON
 
     try:
         with open(file_path, 'r', encoding='utf-8') as file:

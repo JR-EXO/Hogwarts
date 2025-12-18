@@ -3,10 +3,10 @@ def init_character(last_name, first_name, attributes):
     return {
         "Last Name": str(last_name),
         "First Name": str(first_name),
-        "Inventory": [],  # blanck inventory
-        "Spells": [],  #no spells
-        "Attributes": dict(attributes)  # Make a copy of the attributes
-        "Money": 100,  #starting money
+        "Inventory": [],
+        "Spells": [],
+        "Attributes": dict(attributes),
+        "Money": 100
     }
 
 

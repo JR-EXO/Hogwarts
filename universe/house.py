@@ -96,7 +96,6 @@ def test_house_functions():
     assigned_house = assign_house(character, questions)
     print(f"\nThe Sorting Hat has decided! You belong to... {assigned_house}!")
 
+"""
 
-if __name__ == "__main__":
-   test_house_functions()
    
