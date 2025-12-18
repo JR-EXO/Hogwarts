@@ -1,17 +1,14 @@
 import os
 import sys
-import json
-from typing import Dict, List, Optional
+from typing import Dict
 from utils.input_utils import ask_text, ask_number, ask_choice, load_file
-from universe.character import init_character, display_character, modify_money, add_item
+from universe.character import init_character, display_character, add_item
 
 def introduction():
-    """Display the introductory text for Chapter 1."""
 
     print("\n" + "="*80)
     print("HARRY POTTER: THE HOGWARTS ADVENTURE")
     print("Chapter 1: The Boy Who Lived")
-
     print("="*80)
     print("\nWelcome to the magical world of Harry Potter!")
     print("You are about to embark on an extraordinary journey...")
@@ -19,31 +16,22 @@ def introduction():
     print("\n" + "-"*80)
 
 def create_character() -> Dict:
-    """Create and return the player's character."""
+
     print("\n" + "="*80)
     print("CHARACTER CREATION")
     print("="*80)
-
-    # Get character's name
     last_name = ask_text("Enter your character's last name: ")
     first_name = ask_text("Enter your character's first name: ")
-
     print("\nNow, distribute 20 points among these 4 attributes (1-10 each):")
+    print("\nChoose your attributes (1-10 each, total must be ≤ 20):")
+    courage = ask_number("Courage level (1-10): ", 1, 10)
+    intelligence = ask_number("Intelligence level (1-10): ", 1, 10)
+    loyalty = ask_number("Loyalty level (1-10): ", 1, 10)
+    ambition = ask_number("Ambition level (1-10): ", 1, 10)
 
-    # Get attributes with validation to ensure total doesn't exceed 20
-    while True:
-        print("\nChoose your attributes (1-10 each, total must be ≤ 20):")
-        courage = ask_number("Courage level (1-10): ", 1, 10)
-        intelligence = ask_number("Intelligence level (1-10): ", 1, 10)
-        loyalty = ask_number("Loyalty level (1-10): ", 1, 10)
-        ambition = ask_number("Ambition level (1-10): ", 1, 10)
+    total = courage + intelligence + loyalty + ambition
 
-        total = courage + intelligence + loyalty + ambition
-        if total <= 20:
-            break
-        print(f"\nError: Total points ({total}) exceed 20. Please redistribute your points.")
 
-    # Create character with attributes
     attributes = {
         "Courage": courage,
         "Intelligence": intelligence,
@@ -53,7 +41,7 @@ def create_character() -> Dict:
 
     character = init_character(last_name, first_name, attributes)
 
-    # Display character profile
+
     print("\n" + "-"*80)
     print("CHARACTER CREATED SUCCESSFULLY!")
     display_character(character)
@@ -62,7 +50,7 @@ def create_character() -> Dict:
     return character
 
 def receive_letter() -> bool:
-    """Handle the letter reception scene. Return True if player accepts, False otherwise."""
+
     print("\n" + "="*80)
     print("THE HOGWARTS LETTER")
     print("="*80)
@@ -97,7 +85,6 @@ Deputy Headmistress""")
         sys.exit(0)
 
 def meet_hagrid(character: Dict) -> None:
-    """Handle the meeting with Hagrid."""
     print("\n" + "="*80)
     print("MEETING HAGRID")
     print("="*80)
@@ -132,24 +119,12 @@ def buy_supplies(character: Dict) -> None:
     print("\nDIAGON ALLEY!")
     print("\nThe most magical shopping street in the wizarding world unfolds before you.")
 
-    # Load inventory from JSON file
-    try:
-        inventory_data = load_file(os.path.join("data", "inventory.json"))
-        items = inventory_data.get("items", [])
-    except (FileNotFoundError, json.JSONDecodeError):
-        print("\nError: Could not load inventory data. Using default items.")
-        items = [
-            {"name": "Magic Wand", "price": 35, "required": True},
-            {"name": "Wizard Robe", "price": 20, "required": True},
-            {"name": "Potions Book", "price": 25, "required": True},
-            {"name": "Tin Cauldron", "price": 15, "required": False},
-            {"name": "Magic Quill", "price": 5, "required": False},
-            {"name": "Enchanted Book", "price": 30, "required": False},
-            {"name": "Copper Scale", "price": 10, "required": False},
-            {"name": "Invisibility Cloak", "price": 100, "required": False}
-        ]
 
-    # Define pets separately
+    inventory_data = load_file(os.path.join("data", "inventory.json"))
+    items = inventory_data.get("items", [])
+
+
+
     pets = [
         {"name": "Owl", "price": 20},
         {"name": "Cat", "price": 15},
@@ -157,7 +132,6 @@ def buy_supplies(character: Dict) -> None:
         {"name": "Toad", "price": 5}
     ]
 
-    # Shopping loop
     required_items = [item["name"] for item in items if item["required"]]
     purchased_items = []
 
@@ -166,7 +140,6 @@ def buy_supplies(character: Dict) -> None:
         print("Welcome to Diagon Alley!")
         print("Catalog of available items:")
 
-        # Display available items
         for i, item in enumerate(items, 1):
             required = " (required)" if item["name"] in required_items else ""
             print(f"{i}. {item['name']} - {item['price']} Galleons{required}")
@@ -175,15 +148,14 @@ def buy_supplies(character: Dict) -> None:
         if required_items:
             print(f"Remaining required items: {', '.join(required_items)}")
 
-        # Get user's choice
+
         choice = ask_number("\nEnter the number of the item to buy (or 0 to finish shopping): ", 0, len(items))
 
-        if choice == 0:  # Finish shopping
+        if choice == 0:
             break
 
         selected_item = items[choice - 1]
 
-        # Check if already purchased
         if selected_item["name"] in purchased_items:
             print(f"You've already bought {selected_item['name']}!")
             continue
@@ -193,21 +165,20 @@ def buy_supplies(character: Dict) -> None:
             print("You don't have enough Galleons for that!")
             continue
 
-        # Purchase item
         character["Money"] -= selected_item["price"]
         purchased_items.append(selected_item["name"])
 
-        # Remove from required items if it was required
+
         if selected_item["name"] in required_items:
             required_items.remove(selected_item["name"])
 
         print(f"You bought: {selected_item['name']} (-{selected_item['price']} Galleons).")
         print(f"You have {character['Money']} Galleons left.")
 
-        # Add to character's inventory
+
         add_item(character, "Inventory", selected_item["name"])
 
-    # Check if all required items were purchased
+
     if required_items:
         print("\n" + "!"*80)
         print("Oh no! You didn't purchase all the required items!")
@@ -217,7 +188,7 @@ def buy_supplies(character: Dict) -> None:
         input("\nPress Enter to exit...")
         sys.exit(0)
 
-    # Pet selection
+
     print("\n" + "="*80)
     print("MAGICAL MENAGERIE")
     print("="*80)
@@ -225,32 +196,25 @@ def buy_supplies(character: Dict) -> None:
     print("\nIt's time to choose your Hogwarts pet!")
     print(f"You have {character['Money']} Galleons.")
 
-    # Display available pets
+
     print("\nAvailable pets:")
     for i, pet in enumerate(pets, 1):
         print(f"{i}. {pet['name']} - {pet['price']} Galleons")
 
-    # Get pet choice
-    while True:
-        try:
-            print(f"\nYou have {character['Money']} Galleons left.")
-            choice = ask_number("Which pet do you want? (enter number): ", 1, len(pets))
-            selected_pet = pets[choice - 1]
+
+
+    print(f"\nYou have {character['Money']} Galleons left.")
+    choice = ask_number("Which pet do you want? (enter number): ", 1, len(pets))
+    selected_pet = pets[choice - 1]
 #a
-            if selected_pet["price"] > character["Money"]:
-                print("You don't have enough Galleons for that pet!")
-                continue
+    if selected_pet["price"] > character["Money"]:
+        print("You don't have enough Galleons for that pet!")
 
-            # Purchase pet
-            character["Money"] -= selected_pet["price"]
-            print(f"\nYou chose: {selected_pet['name']} (-{selected_pet['price']} Galleons).")
-            add_item(character, "Inventory", selected_pet["name"])
-            break
 
-        except (ValueError, IndexError):
-            print("Invalid choice. Please try again.")
 
-    # Final summary
+    character["Money"] -= selected_pet["price"]
+    print(f"\nYou chose: {selected_pet['name']} (-{selected_pet['price']} Galleons).")
+    add_item(character, "Inventory", selected_pet["name"])
     print("\n" + "="*80)
     print("PURCHASE SUMMARY")
     print("="*80)
@@ -260,24 +224,13 @@ def buy_supplies(character: Dict) -> None:
     input("\nPress Enter to continue...")
 
 def start_chapter_1() -> Dict:
-    """Start Chapter 1 of the adventure."""
-    # Initialize the chapter
     introduction()
-
-    # Create character
     character = create_character()
-
-    # Receive Hogwarts letter
     if not receive_letter():
         return None
-
-    # Meet Hagrid
     meet_hagrid(character)
-
-    # Go shopping in Diagon Alley
     buy_supplies(character)
 
-    # End of chapter
     print("\n" + "="*80)
     print("END OF CHAPTER 1")
     print("="*80)
@@ -289,7 +242,7 @@ def start_chapter_1() -> Dict:
     return character
 
 if __name__ == "__main__":
-    # This allows the chapter to be run directly for testing
+
     print("HARRY POTTER: THE HOGWARTS ADVENTURE")
     print("Chapter 1: The Boy Who Lived")
     print("-" * 80)
