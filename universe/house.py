@@ -5,13 +5,6 @@ HOUSES = ["Gryffindor", "Slytherin", "Hufflepuff", "Ravenclaw"]
 DEFAULT_HOUSES = {house: 0 for house in HOUSES}
 
 def update_house_points(houses: Dict[str, int], house_name: str, points: int):
-    """
-    Update the points of a specific house.
-    Arg:
-        houses: Dictionary with house names as keys and their current points as values
-        house_name: Name of the house
-        points: points to add or substract
-    """
 
     if house_name not in houses :
         print(f"Warning: House '{house_name}' not found.")
@@ -21,11 +14,7 @@ def update_house_points(houses: Dict[str, int], house_name: str, points: int):
 
 
 def display_winning_house(houses: Dict[str, int]) :
-    """
-    Display the house(s) with the highest score.
-    Args:
-        houses: Dictionary with house names as keys and their current points as values
-    """
+
     if not houses:
         print("No houses data available.")
         return
@@ -41,34 +30,25 @@ def display_winning_house(houses: Dict[str, int]) :
 
 
 def assign_house(character: Dict[str, Any], questions: List[Tuple[str, List[str], List[str]]]) :
-    """
-    Determine the player's house based on character attributes
-    Arg:
-        character: Dictionary containing character attributes : courage, intelligence,loyalty, ambition
-        questions: List of tuples containing: question_text, choices, house_weights
-    Return:
-        str: name of the assigned house
-    """
     house_scores = {house: 0 for house in HOUSES}
-    #each worth 2 points
     house_scores["Gryffindor"] += character.get("courage", 0) * 2
     house_scores["Slytherin"] += character.get("ambition", 0) * 2
     house_scores["Hufflepuff"] += character.get("loyalty", 0) * 2
     house_scores["Ravenclaw"] += character.get("intelligence", 0) * 2
     
-    # update score
+
     for i, (question, choices, house_weights) in enumerate(questions, 1):
         print(f"\nQuestion {i}: {question}")
         answer_index = ask_choice("Choose an answer:", choices) - 1
         chosen_house = house_weights[answer_index]
         house_scores[chosen_house] += 3  # Each answer is worth 3 points
     
-    #finalscore
+
     print("\nSummary of scores:")
     for house, score in sorted(house_scores.items(), key=lambda x: x[1], reverse=True):
         print(f"{house}: {score} points")
     
-    #winner
+
     max_score = max(house_scores.values())
     winning_houses = [house for house, score in house_scores.items() if score == max_score]
 
@@ -76,8 +56,6 @@ def assign_house(character: Dict[str, Any], questions: List[Tuple[str, List[str]
 
 """
 def test_house_functions():
-    """"""Test function.""""""
-    # Test update_house_points
     print("=== Testing update_house_points ===")
     houses = DEFAULT_HOUSES.copy()
     update_house_points(houses, "Gryffindor", 20)
@@ -87,11 +65,11 @@ def test_house_functions():
     update_house_points(houses, "Gryffindor", -5)  # Remove points
     update_house_points(houses, "Hogwarts", 10)  # Non-existent house
     
-    # Test display_winning_house
+    
     print("\n=== Testing display_winning_house ===")
     display_winning_house(houses)
     
-    # Test assign_house
+    
     print("\n=== Testing assign_house ===")
     character = {
         "name": "Test Character",
@@ -122,4 +100,3 @@ def test_house_functions():
 if __name__ == "__main__":
    test_house_functions()
    
-"""

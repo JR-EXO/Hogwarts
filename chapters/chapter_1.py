@@ -7,9 +7,11 @@ from universe.character import init_character, display_character, modify_money, 
 
 def introduction():
     """Display the introductory text for Chapter 1."""
+
     print("\n" + "="*80)
     print("HARRY POTTER: THE HOGWARTS ADVENTURE")
     print("Chapter 1: The Boy Who Lived")
+
     print("="*80)
     print("\nWelcome to the magical world of Harry Potter!")
     print("You are about to embark on an extraordinary journey...")

@@ -23,15 +23,6 @@ def is_valid_number(s: str) :
 
 
 def ask_number(message: str, min_val: Optional[int] = None, max_val: Optional[int] = None) :
-    """
-    Prompt the user to enter an integer within optional bounds.
-    Arg:
-        message (str): the prompt message to display
-        min_val (int, optional): minimum allowed value
-        max_val (int, optional): maximum allowed value
-    Return:
-        int: the validated number entered by the user
-    """
 
     while True:
         user_input = input(message).strip()
@@ -55,21 +46,13 @@ def ask_number(message: str, min_val: Optional[int] = None, max_val: Optional[in
 
 
 def ask_choice(message: str, options: List[Any]) :
-    """
-    Display a numbered menu of options and get a valid choice.
-    Arg:
-        message (str): the prompt message to display
-        options (List): list of options to choose from
-    Return:
-        the selected option from the list
-    """
     if not options:
         raise ValueError("No options provided")
-        
+
     print(message)
     for i, option in enumerate(options, 1):
         print(f"{i}. {option}")
-        
+
     while True:
         try:
             choice = ask_number("Your choice: ", 1, len(options))
@@ -79,7 +62,7 @@ def ask_choice(message: str, options: List[Any]) :
 
 
 def load_file(file_path: str):
-    """
+
     Load and parse a JSON file:
     Arg:
         file_path (str): path to the JSON file
@@ -88,7 +71,7 @@ def load_file(file_path: str):
     Raises(error):
         FileNotFoundError: If the file doesn't exist
         json.JSONDecodeError: If the file contains invalid JSON
-    """
+
     try:
         with open(file_path, 'r', encoding='utf-8') as file:
             return json.load(file)
