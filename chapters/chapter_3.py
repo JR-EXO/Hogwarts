@@ -82,7 +82,7 @@ def magic_quiz(character: Dict[str, Any], file_path: str = "../data/magic_quiz.j
     
     return score
 
-def update_house_points(houses: List[Dict[str, Any]], house_name: str, points: int) -> None:
+def update_house_points(houses: List[Dict[str, Any]], house_name: str, points: int):
 
     for house in houses:
         if house['name'].lower() == house_name.lower():
@@ -97,7 +97,7 @@ def get_leading_house(houses: List[Dict[str, Any]]) -> str:
     leading_house = max(houses, key=lambda h: h.get('points', 0))
     return leading_house['name']
 
-def display_character_info(character: Dict[str, Any]) -> None:
+def display_character_info(character: Dict[str, Any]):
 
     print("\n=== Character Information ===")
     print(f"Name: {character.get('name', 'Unknown')}")
@@ -111,7 +111,7 @@ def display_character_info(character: Dict[str, Any]) -> None:
     
     print("=" * 30)
 
-def start_chapter_3(character: Dict[str, Any], houses: List[Dict[str, Any]]) -> None:
+def start_chapter_3(character: Dict[str, Any], houses: List[Dict[str, Any]]):
     print("\n" + "=" * 50)
     print("CHAPTER 3: CLASSES AND DISCOVERING HOGWARTS")
     print("=" * 50)

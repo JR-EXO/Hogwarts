@@ -2,7 +2,7 @@ import json
 from typing import List, Any, Union, Optional
 
 
-def ask_text(message: str) :
+def ask_text(message: str):
     while True:
         user_input = input(message).strip()
         if user_input:

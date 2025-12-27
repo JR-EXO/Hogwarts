@@ -2,7 +2,7 @@ import json
 import os
 from typing import Dict, List, Tuple
 
-def meet_friends(character: Dict[str, any]) -> None:
+def meet_friends(character: Dict[str, any]):
     print("\nYou board the Hogwarts Express. The train slowly departs northward...")
 
     print("\nA red-haired boy enters your compartment, looking friendly.")
@@ -116,15 +116,16 @@ def sorting_ceremony(character: Dict[str, any]):
     print(f"\nThe Sorting Hat exclaims: {character['house']}!!!")
     print(f"You join the {character['house']} students to loud cheers!")
 
-def enter_common_room(character: Dict[str, any]) -> None:
+def enter_common_room(character: Dict[str, any]):
     house = character.get("house", "")
     house_info = {}
     
-    try:
-        with open(os.path.join("universe", "houses.json"), 'r') as f:
+    houses_path = os.path.join("universe", "houses.json")
+    if os.path.exists(houses_path) and os.path.isfile(houses_path):
+        with open(houses_path, 'r') as f:
             houses_data = json.load(f)
             house_info = next((h for h in houses_data if h["name"] == house), {})
-    except (FileNotFoundError, json.JSONDecodeError, StopIteration):
+    else:
         print("Error: Could not load house information.")
         return
     
@@ -167,3 +168,5 @@ def start_chapter_2(character: Dict[str, any]):
     print("Your journey at Hogwarts is just beginning...")
     print("Classes start tomorrow - be ready for new adventures!")
     print("="*50 + "\n")
+
+

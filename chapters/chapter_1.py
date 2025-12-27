@@ -221,7 +221,7 @@ def buy_supplies(character: Dict) :
     print("\nHagrid claps his hands together: 'Brilliant! Now we're all set for Hogwarts!'")
     input("\nPress Enter to continue...")
 
-def start_chapter_1() -> Dict:
+def start_chapter_1():
     introduction()
     character = create_character()
     if not receive_letter():
