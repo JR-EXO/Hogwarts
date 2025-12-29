@@ -80,12 +80,12 @@ def sorting_ceremony(character: Dict[str, any]):
             ["Gryffindor", "Slytherin", "Hufflepuff", "Ravenclaw"]
         )
     ]
-    
+
     house_scores = {"Gryffindor": 0, "Slytherin": 0, "Hufflepuff": 0, "Ravenclaw": 0}
-    
+
     print("\nThe Sorting Hat is placed on your head...")
     print("Hmm... difficult. Very difficult. Let's see...")
-    
+
     for i in range(1, len(questions)+1):
         question, options, houses = questions[i-1]
         print(f"\n{question}")
@@ -94,7 +94,7 @@ def sorting_ceremony(character: Dict[str, any]):
         choice = ask_number("\nYour choice (1-4): ", 1, 4)
         selected_house = houses[choice-1]
         house_scores[selected_house] += 10 - (i-1)
-        
+
         if i < len(questions):
             print("\n'Interesting... very interesting...' the Hat murmurs.")
 
@@ -104,31 +104,38 @@ def sorting_ceremony(character: Dict[str, any]):
     house_scores["Ravenclaw"] += character.get("intelligence", 0)
 
 
-    sorted_houses = sorted(house_scores.items(), key=lambda x: x[1], reverse=True)
+    sorted_houses = sort_dict(house_scores.items())
     character["house"] = sorted_houses[0][0]
-    
+
     print("\nSummary of scores:")
     for house, score in sorted_houses:
         print(f"{house}: {score} points")
-    
+
     print(f"\nThe Sorting Hat exclaims: {character['house']}!!!")
     print(f"You join the {character['house']} students to loud cheers!")
 
 def enter_common_room(character: Dict[str, any]):
     house = character.get("house", "")
-    house_info = {}
-    
+
+
     houses_path = os.path.join("universe", "houses.json")
     if os.path.exists(houses_path) and os.path.isfile(houses_path):
         with open(houses_path, 'r') as f:
             houses_data = json.load(f)
-            house_info = next((h for h in houses_data if h["name"] == house), {})
+
+            house_info = None
+            i = 0
+
+            while i < len(houses_data) and house_info is None:
+                if houses_data[i]["name"] == house:
+                    house_info = houses_data[i]
+                i += 1
     else:
         print("Error: Could not load house information.")
         return
-    
+
     print("\nYou follow the prefects through the castle corridors...")
-    
+
     if house == "Gryffindor":
         print("🦁 You enter a cozy common room with plush armchairs and a roaring fire.")
     elif house == "Slytherin":
@@ -137,10 +144,9 @@ def enter_common_room(character: Dict[str, any]):
         print("🦡 You step into a warm, round room with honey-colored wood and lots of plants.")
     else:
         print("🦅 You enter a spacious, airy room with a domed ceiling painted with stars.")
-    
+
     print(f"✨ {house_info.get('welcome_message', 'Welcome to your new home!')}")
     print(f"Your house colors: {house_info.get('colors', 'unknown')}")
-
 def start_chapter_2(character: Dict[str, any]):
 
     print("\n" + "="*50)
@@ -159,12 +165,11 @@ def start_chapter_2(character: Dict[str, any]):
     print("YOUR CHARACTER SUMMARY:")
     print("-"*50)
     for key, value in character.items():
-        print(f"{key.capitalize()}: {value}")
+        print(f"{key.title()}: {value}")
 
     print("\n" + "="*50)
     print("CHAPTER 2 COMPLETE!")
     print("Your journey at Hogwarts is just beginning...")
     print("Classes start tomorrow - be ready for new adventures!")
     print("="*50 + "\n")
-
 

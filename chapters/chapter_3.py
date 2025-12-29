@@ -2,17 +2,12 @@ import json
 import random
 import os
 from typing import Dict, List, Any
+from utils.input_utils import *
 
-def load_json_file(file_path: str):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return json.load(file)
-
-def input_continue(prompt: str = "Press Enter to continue..."):
-    input(prompt)
 
 def learn_spells(character: Dict[str, Any], file_path: str = "../data/spells.json"):
     abs_path = os.path.join(os.path.dirname(__file__), file_path)
-    all_spells = load_json_file(abs_path)
+    all_spells = load_file(abs_path)
     offensive_spells = [s for s in all_spells if s['type'].lower() == 'offensive']
     defensive_spells = [s for s in all_spells if s['type'].lower() == 'defensive']
     utility_spells = [s for s in all_spells if s['type'].lower() == 'utility']
@@ -50,7 +45,7 @@ def learn_spells(character: Dict[str, Any], file_path: str = "../data/spells.jso
 def magic_quiz(character: Dict[str, Any], file_path: str = "../data/magic_quiz.json") -> int:
     abs_path = os.path.join(os.path.dirname(__file__), file_path)
 
-    all_questions = load_json_file(abs_path)
+    all_questions = load_file(abs_path)
 
     selected_questions = []
     while len(selected_questions) < 4 and all_questions:
@@ -87,14 +82,17 @@ def update_house_points(houses: List[Dict[str, Any]], house_name: str, points: i
     for house in houses:
         if house['name'].lower() == house_name.lower():
             house['points'] = house.get('points', 0) + points
-            break
 
-def get_leading_house(houses: List[Dict[str, Any]]) -> str:
+def get_leading_house(houses: List[Dict[str, Any]]):
 
     if not houses:
         return "No houses available"
 
-    leading_house = max(houses, key=lambda h: h.get('points', 0))
+    leading_house = houses[0]
+    for house in houses[1:]:
+        if house.get('points', 0) > leading_house.get('points', 0):
+            leading_house = house
+
     return leading_house['name']
 
 def display_character_info(character: Dict[str, Any]):

@@ -78,6 +78,29 @@ def load_file(file_path: str):
     with open(file_path, 'r', encoding='utf-8') as file:
         return json.load(file)
 
+def input_continue(prompt: str = "Press Enter to continue..."):
+    input(prompt)
+
+
+
+def sort_dict(d):
+    keys = []
+
+    for k in d:
+        keys.append(k)
+    n = len(keys)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if keys[j] > keys[j + 1]:
+                keys[j], keys[j + 1] = keys[j + 1], keys[j]
+    sorted_dict = {}
+
+    for k in keys:
+        sorted_dict[k] = d[k]
+
+    return sorted_dict
+
+
 """
 if __name__ == "__main__":
     name = ask_text("Enter your character's name: ")
