@@ -104,8 +104,9 @@ def play_quidditch(character, houses):
     else:
         print("\nIt's a draw!")
         return
-    
-    houses[winning_house] = houses[winning_house] if winning_house in houses else 0 + 500
+
+    if winning_house in houses:
+        houses[winning_house] = houses[winning_house] + 500
     print(f"\n{winning_house} earns 500 points for the House Cup!")
 
 def start_chapter_4(character, houses):
@@ -125,7 +126,9 @@ def start_chapter_4(character, houses):
     print("="*50)
     
     print("\nCurrent House Points:")
-    house_list = [(house, points) for house, points in houses.items()]
+    house_list = []
+    for house in houses:
+        house_list.append((house["name"], house["points"]))
     
     n = len(house_list)
     for i in range(n):

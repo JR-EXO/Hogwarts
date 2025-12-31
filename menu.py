@@ -10,7 +10,7 @@ def launch_menu_choice():
         {"name": "Hufflepuff", "points": 0},
         {"name": "Ravenclaw", "points": 0},
         {"name": "Slytherin", "points": 0}
-              ]
+        ]
     display_main_menu()
     choice = ask_text("Enter your choice (1-2): ")
     
