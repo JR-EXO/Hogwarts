@@ -73,7 +73,7 @@ Deputy Headmistress""")
     print("Do you accept this invitation and go to Hogwarts?")
     choice = ask_choice("Your choice: ", ["Yes, of course!", "No, I'd rather stay..."])
 
-    if choice == 1:
+    if choice == "Yes, of course!":
         print("\nExcellent! Your magical education is about to begin!")
         input("\nPress Enter to continue...")
         return True
@@ -238,7 +238,8 @@ def start_chapter_1():
     input("\nPress Enter to continue to Chapter 2...")
 
     return character
-"""
+
+
 if __name__ == "__main__":
 
     print("HARRY POTTER: THE HOGWARTS ADVENTURE")
@@ -253,4 +254,3 @@ if __name__ == "__main__":
         display_character(player_character)
     else:
         print("\nGame over. Better luck next time!")
-"""
