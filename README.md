@@ -1,6 +1,6 @@
-----------------------Hogwart project : The art of coding like a wizard---------------------------
+----------------------Hogwart project : The art of coding like a wizard----------------------
 
-                             Title : hogwart adventure
+Title : hogwart adventure
 
 desrcription : 
 A text adventure game that takes players through various chapters of magical experiences at Hogwarts School.
@@ -12,9 +12,11 @@ MOLLIERE Sacha
 RAZAFINDRABE Jery
 
 instalation :
+
 python required
 
 Usage :
+
 Start the adventure by running the main.py
 folow the given instruction by providing acceptable answer to the program
 for exemple when you will be asked to press "enter" to continue the interaction you will press "enter" when you are finished reading.
@@ -63,9 +65,28 @@ Sacha : house , README , chapter2 and chapter 4
 
 Jery : character , chapter 1 , chapter 3 , main and menu
 
+
 Control, Testing, and Validation :
 
 Input and Error Management:
 
+The program originally stopped when the user entered an unwanted or invalid input. 
+This was fixed by adding input validation loops so the question is asked again until a correct answer is provided.
+
+Because predefined functions were not allowed, some built-in behaviors had to be recreated manually in the 
+utils folder using loops and conditions.
+
+Errors occurred when .items() was used on a list instead of a dictionary, causing the program to crash. 
+This issue was resolved by replacing .items() with simple loops adapted to the data structure being used.
+
+
 Testing Strategies:
 
+Each chapter of the program was tested individually to save time and to make it easier to identify and 
+fix errors without running the entire game.
+
+Specific test cases were used, including valid inputs to verify normal program behavior and invalid inputs (such as empty input, non-numeric values, or incorrect choices) to ensure 
+the program asks the user again instead of stopping.
+
+Targeted tests were performed to address previously encountered issues, such as incorrect input handling,
+misuse of data structures (lists vs dictionaries), and functions recreated without predefined methods.
