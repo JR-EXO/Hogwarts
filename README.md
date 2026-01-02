@@ -63,25 +63,9 @@ Sacha : house , README , chapter2 and chapter 4
 
 Jery : character , chapter 1 , chapter 3 , main and menu
 
-
 Control, Testing, and Validation :
 
-Input and Error Management: 
-
+Input and Error Management:
 
 Testing Strategies:
-
-
-
-
-
-
-
-
-
-Input and Error Management: 
-
-
-Testing Strategies: 
-
 
